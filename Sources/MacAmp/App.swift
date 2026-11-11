@@ -27,7 +27,8 @@ import MacAmpCore
     func height(of panel: Panel) -> CGFloat {
         guard let limits = Self.resizable[panel] else { return 116 }
         let saved = panel == .playlist ? model.session.playlistHeight : model.session.skinsHeight
-        return max(limits.minimum, saved.map { CGFloat($0) } ?? limits.standard)
+        guard let saved, saved.isFinite else { return limits.standard }
+        return min(2000, max(limits.minimum, CGFloat(saved)))
     }
     /// Drags the bottom edge of the playlist or skins panel. The top stays put, and panels
     /// docked below it (directly or through each other) move with the bottom edge.
@@ -230,7 +231,11 @@ final class PlayerWindow: NSWindow {
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Set the Dock icon directly so a stale LaunchServices cache can't show the generic one.
         if let icon = Bundle.main.image(forResource: "AppIcon") { NSApp.applicationIconImage = icon }
-        model = Model(); windows = Windows(model: model); windows.show(); notch = NotchController(model: model, windows: windows); menus(); menuNeedsUpdate(NSApp.mainMenu!.items.first { $0.submenu?.title == "Skins" }!.submenu!); NSApp.activate(ignoringOtherApps: true)
+        model = Model()
+        // Safe start: holding Option while Mac-Amp opens goes back to the Classic skin,
+        // in case a skin from somewhere else misbehaves.
+        if NSEvent.modifierFlags.contains(.option) { model.useSkin(Skin.classic.id) }
+        windows = Windows(model: model); windows.show(); notch = NotchController(model: model, windows: windows); menus(); menuNeedsUpdate(NSApp.mainMenu!.items.first { $0.submenu?.title == "Skins" }!.submenu!); NSApp.activate(ignoringOtherApps: true)
     }
     func applicationWillTerminate(_ notification: Notification) { model.save() }
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool { windows.panels[.player]?.makeKeyAndOrderFront(nil); return true }

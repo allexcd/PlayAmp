@@ -41,6 +41,12 @@ public struct Skin: Codable, Equatable, Identifiable, Sendable {
         public init(windowCorner: Double? = nil, buttonCorner: Double? = nil, cassetteWindow: String? = nil, reels: String? = nil, label: String? = nil) {
             self.windowCorner = windowCorner; self.buttonCorner = buttonCorner; self.cassetteWindow = cassetteWindow; self.reels = reels; self.label = label
         }
+        /// Keeps corner radii in a sane range.
+        public func sanitized() -> Shape {
+            func corner(_ value: Double?, _ limit: Double) -> Double? { value.flatMap { $0.isFinite ? min(limit, max(0, $0)) : nil } }
+            var copy = self; copy.windowCorner = corner(windowCorner, 60); copy.buttonCorner = corner(buttonCorner, 30)
+            return copy
+        }
         /// Fields this shape leaves unset are taken from `parent`.
         public func filled(from parent: Shape) -> Shape {
             Shape(windowCorner: windowCorner ?? parent.windowCorner, buttonCorner: buttonCorner ?? parent.buttonCorner,
@@ -174,6 +180,11 @@ public struct Skin: Codable, Equatable, Identifiable, Sendable {
 
 public enum SkinLibrary {
     static let fontExtensions: Set<String> = ["ttf", "otf", "ttc"]
+    // Skins are shared between people, so files from the Skins folder are treated as untrusted.
+    /// Largest skin.json that is read.
+    public static let maxSkinFileBytes = 1_000_000
+    /// Most user skins loaded from one folder.
+    public static let maxUserSkins = 200
 
     /// Built-in skins, then the Skins folder's `*.json` files and `*/skin.json` packages.
     /// Files that don't parse are skipped.
@@ -183,10 +194,15 @@ public enum SkinLibrary {
         for entry in entries.sorted(by: { $0.lastPathComponent.localizedStandardCompare($1.lastPathComponent) == .orderedAscending }) {
             let isFolder = (try? entry.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true
             let file = isFolder ? entry.appendingPathComponent("skin.json") : entry
+            guard skins.count < Skin.builtIn.count + maxUserSkins else { break }
             guard isFolder || entry.pathExtension.lowercased() == "json",
-                  let data = try? Data(contentsOf: file), var skin = try? JSONDecoder().decode(Skin.self, from: data) else { continue }
+                  let data = boundedData(at: file), var skin = try? JSONDecoder().decode(Skin.self, from: data) else { continue }
             skin.id = (isFolder ? "folder:" : "file:") + entry.lastPathComponent
             skin.folder = isFolder ? entry : folder
+            skin.name = String(skin.name.prefix(80))
+            // Drop anything that could crash, hang or blow up the window (see SkinLayout.sanitized).
+            skin.layout = skin.layout?.sanitized()
+            skin.shape = skin.shape?.sanitized()
             skins.append(skin)
         }
         return skins
@@ -224,12 +240,18 @@ public enum SkinLibrary {
         return skin
     }
 
-    /// Relative names resolve inside `folder`; names that try to leave it are rejected (empty path).
+    /// Reads a skin.json, refusing files that are too large to be a real skin.
+    static func boundedData(at url: URL) -> Data? {
+        guard let size = try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize, size <= maxSkinFileBytes else { return nil }
+        return try? Data(contentsOf: url)
+    }
+
+    /// Names resolve inside `folder` only. Absolute paths, `..` and symlinks that lead out of the
+    /// folder are rejected (empty path), so a shared skin can't make the app open other files.
     static func absolute(_ file: String, in folder: URL?) -> String {
-        if file.hasPrefix("/") { return file }
-        guard let folder else { return "" }
+        guard let folder, !file.isEmpty, !file.hasPrefix("/"), !file.hasPrefix("~"), !file.contains("\0") else { return "" }
         let base = folder.resolvingSymlinksInPath().path
-        let url = URL(fileURLWithPath: base).appendingPathComponent(file).standardizedFileURL
+        let url = URL(fileURLWithPath: base).appendingPathComponent(file).standardizedFileURL.resolvingSymlinksInPath()
         return url.path.hasPrefix(base + "/") ? url.path : ""
     }
 

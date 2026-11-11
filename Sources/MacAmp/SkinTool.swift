@@ -154,6 +154,12 @@ import MacAmpCore
           File "@<slot>" uses the skin's image for that slot, if any.
           Common fields: frame, fill, stroke, strokeWidth, corner, opacity, visible ("binding" or "!binding"), help
 
+        LIMITS (skins are checked when loaded; anything outside these is ignored)
+          skin.json up to \(SkinLibrary.maxSkinFileBytes / 1000) KB; layout size \(Int(SkinLayout.sizeLimits.width.lowerBound))–\(Int(SkinLayout.sizeLimits.width.upperBound)) × \(Int(SkinLayout.sizeLimits.height.lowerBound))–\(Int(SkinLayout.sizeLimits.height.upperBound)) points
+          up to \(SkinLayout.maxElements) elements, groups nested up to \(SkinLayout.maxDepth) deep; fontSize up to 400; text up to 500 characters
+          images: \(SkinImage.extensions.sorted().joined(separator: ", ")); up to \(SkinImage.maxBytes / 1_000_000) MB and \(SkinImage.maxPixels) pixels a side
+          files must be inside the skin's folder: no absolute paths, no "..", no symlinks that lead outside
+
         ELEMENT TYPES
         \(list(LayoutElement.types))
 

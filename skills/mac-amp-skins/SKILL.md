@@ -77,6 +77,8 @@ The installed app is sandboxed, so its command-line tools can only read and writ
 - A `dragArea`, or the window can't be moved.
 - A `playPause` (or `play`) button and a `hide` button (the close ×).
 - Frames inside the layout size, and files inside the skin folder.
+- Files are named relative to the skin folder. Absolute paths, `..` and symlinks that lead outside it are refused.
+- Stay within the limits listed in [reference.md](reference.md) (layout size, element count, nesting, image size). Anything beyond them is ignored.
 
 ### Good practice
 

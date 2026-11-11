@@ -180,6 +180,9 @@ public enum SkinValidator {
         guard FileManager.default.fileExists(atPath: url.path, isDirectory: &isFolder) else { return [.init(severity: .error, message: "\(url.path) does not exist")] }
         let file = isFolder.boolValue ? url.appendingPathComponent("skin.json") : url
         let folder = isFolder.boolValue ? url : url.deletingLastPathComponent()
+        if let size = try? file.resourceValues(forKeys: [.fileSizeKey]).fileSize, size > SkinLibrary.maxSkinFileBytes {
+            return [.init(severity: .error, message: "\(file.lastPathComponent) is \(size / 1000) KB; skins larger than \(SkinLibrary.maxSkinFileBytes / 1000) KB are not loaded")]
+        }
         guard let data = try? Data(contentsOf: file) else { return [.init(severity: .error, message: "cannot read \(file.path)")] }
         do {
             var skin = try JSONDecoder().decode(Skin.self, from: data)
@@ -225,9 +228,10 @@ public enum SkinValidator {
     }
 
     static func validate(_ layout: SkinLayout, skin: Skin, error: (String) -> Void, warn: (String) -> Void) {
-        guard layout.size.count == 2, (100...1600).contains(layout.width), (40...1200).contains(layout.height) else {
+        guard layout.size.count == 2, SkinLayout.sizeLimits.width.contains(layout.width), SkinLayout.sizeLimits.height.contains(layout.height) else {
             error("layout.size must be [width, height] between [100, 40] and [1600, 1200]"); return
         }
+        var total = 0, deepest = 0
         let types = Set(LayoutElement.types.map(\.name)), actions = Set(LayoutElement.actions.map(\.name))
         let bindings = Set(LayoutElement.bindings.map(\.name)), placeholders = Set(LayoutElement.placeholders.map(\.name))
         let tokens = Set(Skin.tokens.map(\.name)), roles = Set(Skin.fontRoles.map(\.name))
@@ -240,7 +244,9 @@ public enum SkinValidator {
         func value(_ v: Value?, _ path: String) {
             if case .bound(let bind, _, _, _) = v, !bindings.contains(bind) { error("\(path): unknown binding \"\(bind)\"") }
         }
-        func walk(_ elements: [LayoutElement], parent: [Double], path: String) {
+        func walk(_ elements: [LayoutElement], parent: [Double], path: String, depth: Int = 1) {
+            total += elements.count; deepest = max(deepest, elements.isEmpty ? 0 : depth)
+            guard depth <= SkinLayout.maxDepth else { return }
             for (index, e) in elements.enumerated() {
                 let here = "\(path)[\(index)] (\(e.type))"
                 guard types.contains(e.type) else { error("\(here): unknown element type; use one of \(types.sorted().joined(separator: ", "))"); continue }
@@ -270,12 +276,14 @@ public enum SkinValidator {
                 case "slider":
                     if !LayoutElement.sliderBindings.contains(e.bind ?? "") { error("\(here): \"bind\" must be volume, balance or position") }
                 case "dragArea": hasDrag = true
-                case "group": walk(e.children ?? [], parent: [f[2], f[3]], path: here + ".children")
+                case "group": walk(e.children ?? [], parent: [f[2], f[3]], path: here + ".children", depth: depth + 1)
                 default: break
                 }
             }
         }
         walk(layout.elements, parent: [layout.width, layout.height], path: "layout.elements")
+        if total > SkinLayout.maxElements { error("layout has \(total) elements; the limit is \(SkinLayout.maxElements), the rest are ignored") }
+        if deepest > SkinLayout.maxDepth { error("groups are nested \(deepest) deep; the limit is \(SkinLayout.maxDepth), deeper ones are ignored") }
         if !hasDrag { error("layout has no \"dragArea\", so the window could not be moved") }
         if !hasPlay { warn("layout has no play or playPause button") }
         if !hasHide { warn("layout has no button with action \"hide\" (a close button)") }
@@ -310,6 +318,63 @@ public enum SkinValidator {
 }
 
 extension SkinLayout {
+    public static let sizeLimits = (width: 100.0...1600.0, height: 40.0...1200.0)
+    /// Most elements (including group children) and deepest group nesting a layout may have.
+    public static let maxElements = 2000, maxDepth = 8
+
+    /// A copy that is safe to draw, or nil when the size is unusable. Skins come from other people,
+    /// so numbers are forced into sane ranges and oversized or malformed parts are dropped; a skin
+    /// must never be able to crash the app, hang it, or open a window far bigger than the screen.
+    public func sanitized() -> SkinLayout? {
+        guard size.count == 2, size.allSatisfy(\.isFinite),
+              Self.sizeLimits.width.contains(size[0]), Self.sizeLimits.height.contains(size[1]) else { return nil }
+        func number(_ value: Double?, _ range: ClosedRange<Double>) -> Double? {
+            value.flatMap { $0.isFinite ? min(range.upperBound, max(range.lowerBound, $0)) : nil }
+        }
+        func value(_ v: Value?) -> Value? {
+            switch v {
+            case .number(let n)?: return n.isFinite ? v : nil
+            case .bound(let bind, let from, let to, let idle)?:
+                guard from.isFinite, to.isFinite else { return nil }
+                return .bound(bind: bind, from: from, to: to, idle: idle.flatMap { $0.isFinite ? $0 : nil })
+            case nil: return nil
+            }
+        }
+        func paint(_ p: Paint?) -> Paint? {
+            switch p {
+            case .linear(let stops, let angle)?: return .linear(Array(stops.prefix(16)), angle: angle.isFinite ? angle : 90)
+            case .radial(let stops)?: return .radial(Array(stops.prefix(16)))
+            default: return p
+            }
+        }
+        func pair(_ values: [Double]?, positive: Bool) -> [Double]? {
+            guard let values, values.count == 2, values.allSatisfy({ $0.isFinite && abs($0) <= 4000 && (!positive || $0 > 0) }) else { return nil }
+            return values
+        }
+        var budget = Self.maxElements
+        func clean(_ elements: [LayoutElement], depth: Int) -> [LayoutElement] {
+            guard depth <= Self.maxDepth else { return [] }
+            var result: [LayoutElement] = []
+            for var e in elements {
+                guard budget > 0 else { break }
+                guard let f = e.frame, f.count == 4, f.allSatisfy({ $0.isFinite && abs($0) <= 10_000 }), f[2] > 0, f[3] > 0 else { continue }
+                budget -= 1
+                e.fill = paint(e.fill); e.stroke = paint(e.stroke); e.color = paint(e.color)
+                e.track = paint(e.track); e.knob = paint(e.knob); e.peakColor = paint(e.peakColor)
+                e.strokeWidth = number(e.strokeWidth, 0...200); e.corner = number(e.corner, 0...2000)
+                e.fontSize = number(e.fontSize, 1...400); e.gap = number(e.gap, 0...200)
+                e.opacity = value(e.opacity); e.radius = value(e.radius); e.rotation = value(e.rotation); e.spin = value(e.spin)
+                e.knobSize = pair(e.knobSize, positive: true); e.pivot = pair(e.pivot, positive: false)
+                e.text = e.text.map { String($0.prefix(500)) }; e.label = e.label.map { String($0.prefix(200)) }
+                e.help = e.help.map { String($0.prefix(300)) }
+                e.children = e.type == "group" ? clean(e.children ?? [], depth: depth + 1) : nil
+                result.append(e)
+            }
+            return result
+        }
+        return SkinLayout(size: size, elements: clean(elements, depth: 1))
+    }
+
     /// Turns relative file names inside the layout into absolute paths within `folder`.
     func absolutized(in folder: URL?) -> SkinLayout {
         func path(_ file: String) -> String { file.hasPrefix("@") ? file : SkinLibrary.absolute(file, in: folder) }

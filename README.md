@@ -192,6 +192,14 @@ A skin is JSON. It can be a single `.json` file, or a folder with `skin.json` pl
 
 After editing, press **RELOAD** in the Skins panel.
 
+### Skins from other people
+
+A skin is only data: colors, pictures, fonts and a description of shapes. It can't run code. Mac-Amp also treats skin files as untrusted:
+
+- A skin can only use files inside its own folder. Absolute paths, `..` and symlinks that lead elsewhere are refused.
+- Sizes and counts are limited (window size, number of elements, picture dimensions), so a broken or hostile skin can't hang the app or fill the screen.
+- If a skin ever stops Mac-Amp from opening properly, hold **Option** while launching it to go back to the Classic skin.
+
 ### Check and preview skins without opening the app
 
 The app's executable doubles as a skin tool:

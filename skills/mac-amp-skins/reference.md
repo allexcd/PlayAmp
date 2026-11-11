@@ -73,6 +73,12 @@ LAYOUT (layout: { "size": [width, height], "elements": [ ... ] }) — draws the 
   File "@<slot>" uses the skin's image for that slot, if any.
   Common fields: frame, fill, stroke, strokeWidth, corner, opacity, visible ("binding" or "!binding"), help
 
+LIMITS (skins are checked when loaded; anything outside these is ignored)
+  skin.json up to 1000 KB; layout size 100–1600 × 40–1200 points
+  up to 2000 elements, groups nested up to 8 deep; fontSize up to 400; text up to 500 characters
+  images: bmp, gif, heic, jpeg, jpg, pdf, png, tif, tiff, webp; up to 25 MB and 8192 pixels a side
+  files must be inside the skin's folder: no absolute paths, no "..", no symlinks that lead outside
+
 ELEMENT TYPES
   rect — rectangle: fill, stroke, strokeWidth, corner
   ellipse — ellipse filling the frame, or a circle of `radius` centred in it: fill, stroke, strokeWidth, radius
