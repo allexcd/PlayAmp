@@ -1,0 +1,83 @@
+{
+  "name": "VU Radio",
+  "basedOn": "classic",
+  "colors": {
+    "display": "#FFC86B", "displayBackground": "#140D07", "displayDim": "#9C7A4C", "displayHighlight": "#FFF1D6",
+    "playingRow": "#4A2C12", "panelTop": "#6A4425", "panelMid": "#3C2412", "panelBottom": "#56351B",
+    "border": "#C79A63", "text": "#F3E2C6", "panelAccent": "#FFC86B",
+    "buttonTop": "#EDE3D0", "buttonBottom": "#A89880", "buttonPressed": "#6E6352", "buttonText": "#24190F",
+    "sliderFillStart": "#8E5A26", "sliderFillEnd": "#FFC86B", "knob": "#F4EBDC",
+    "spectrumHigh": "#E2462B", "spectrumMid": "#FFC86B"
+  },
+  "fonts": { "display": "Menlo", "label": "Futura" },
+  "shape": { "windowCorner": 10, "buttonCorner": 7 },
+  "layout": {
+    "size": [300, 156],
+    "elements": [
+      { "type": "rect", "frame": [0, 0, 300, 156], "corner": 10,
+        "fill": { "linear": ["#7A4F2A", "#4A2D16", "#5E3A1D"], "angle": 100 }, "stroke": "#1E1208", "strokeWidth": 1.5 },
+      { "type": "rect", "frame": [3, 3, 294, 150], "corner": 8, "stroke": "#FFFFFF22", "strokeWidth": 1 },
+      { "type": "dragArea", "frame": [0, 0, 280, 18] },
+      { "type": "text", "frame": [12, 4, 200, 12], "text": "PLAYAMP  ·  STEREO RECEIVER", "font": "label", "fontSize": 7.5, "weight": "bold", "color": "#F3E2C6" },
+      { "type": "button", "frame": [281, 4, 13, 12], "action": "hide", "label": "×", "help": "Hide PlayAmp" },
+
+      { "type": "group", "frame": [12, 20, 110, 66], "clip": true, "corner": 4, "children": [
+        { "type": "rect", "frame": [0, 0, 110, 66], "fill": { "linear": ["#F7EFD9", "#E6D7B4"], "angle": 90 } },
+        { "type": "rect", "frame": [74, 10, 30, 3], "fill": "#D9442B" },
+        { "type": "text", "frame": [6, 14, 98, 8], "text": "-20   -10   -5   0   +3", "font": "label", "fontSize": 6, "color": "#3A2A1A", "align": "center" },
+        { "type": "text", "frame": [0, 40, 110, 12], "text": "VU", "font": "label", "fontSize": 10, "weight": "bold", "color": "#3A2A1A", "align": "center" },
+        { "type": "group", "frame": [0, 0, 110, 66], "pivot": [55, 76],
+          "rotation": { "bind": "level", "from": -42, "to": 40, "idle": -42 }, "children": [
+          { "type": "rect", "frame": [54.25, 10, 1.5, 56], "fill": "#1B1B1B" }
+        ] },
+        { "type": "rect", "frame": [0, 0, 110, 30], "fill": { "linear": ["#FFFFFF55", "#FFFFFF00"], "angle": 90 } }
+      ] },
+      { "type": "rect", "frame": [12, 20, 110, 66], "corner": 4, "stroke": "#1E1208", "strokeWidth": 1.5 },
+
+      { "type": "group", "frame": [128, 20, 110, 66], "clip": true, "corner": 4, "children": [
+        { "type": "rect", "frame": [0, 0, 110, 66], "fill": { "linear": ["#F7EFD9", "#E6D7B4"], "angle": 90 } },
+        { "type": "rect", "frame": [74, 10, 30, 3], "fill": "#D9442B" },
+        { "type": "text", "frame": [6, 14, 98, 8], "text": "-20   -10   -5   0   +3", "font": "label", "fontSize": 6, "color": "#3A2A1A", "align": "center" },
+        { "type": "text", "frame": [0, 40, 110, 12], "text": "VU", "font": "label", "fontSize": 10, "weight": "bold", "color": "#3A2A1A", "align": "center" },
+        { "type": "group", "frame": [0, 0, 110, 66], "pivot": [55, 76],
+          "rotation": { "bind": "level", "from": -44, "to": 36, "idle": -42 }, "children": [
+          { "type": "rect", "frame": [54.25, 10, 1.5, 56], "fill": "#1B1B1B" }
+        ] },
+        { "type": "rect", "frame": [0, 0, 110, 30], "fill": { "linear": ["#FFFFFF55", "#FFFFFF00"], "angle": 90 } }
+      ] },
+      { "type": "rect", "frame": [128, 20, 110, 66], "corner": 4, "stroke": "#1E1208", "strokeWidth": 1.5 },
+
+      { "type": "text", "frame": [244, 22, 46, 8], "text": "VOLUME", "font": "label", "fontSize": 5.5, "weight": "bold", "color": "text", "align": "center" },
+      { "type": "rect", "frame": [244, 32, 46, 54], "corner": 4, "fill": "#00000040" },
+      { "type": "slider", "frame": [258, 35, 18, 48], "bind": "volume", "vertical": true, "knobSize": [16, 7], "track": "#1A0F07" },
+
+      { "type": "rect", "frame": [12, 92, 226, 30], "corner": 3, "fill": "displayBackground", "stroke": "#000000", "strokeWidth": 1 },
+      { "type": "text", "frame": [16, 94, 218, 6], "text": "88    92    96    100    104    108  MHz", "font": "display", "fontSize": 5, "color": "displayDim" },
+      { "type": "text", "frame": [16, 101, 160, 11], "text": "{title}", "font": "display", "fontSize": 8.5, "color": "display", "scroll": true },
+      { "type": "text", "frame": [180, 101, 54, 11], "text": "{time}", "font": "display", "fontSize": 9, "weight": "bold", "color": "display", "align": "right" },
+      { "type": "spectrum", "frame": [16, 113, 218, 7], "gap": 1, "peaks": false, "fill": { "linear": ["#E2462B", "#FFC86B", "#8E5A26"] } },
+      { "type": "slider", "frame": [14, 92, 222, 30], "bind": "position", "track": "#00000000", "fill": "#00000000",
+        "knob": "#E2462BCC", "knobSize": [2, 28], "help": "Tuning dial: drag to seek" },
+      { "type": "rect", "frame": [12, 92, 226, 14], "corner": 3, "fill": { "linear": ["#FFFFFF14", "#FFFFFF00"], "angle": 90 } },
+
+      { "type": "ellipse", "frame": [250, 95, 30, 30], "fill": { "radial": ["#F2E8D6", "#9C8C72"] }, "stroke": "#1E1208", "strokeWidth": 1 },
+      { "type": "group", "frame": [250, 95, 30, 30], "spin": 6, "children": [
+        { "type": "rect", "frame": [14, 3, 2, 8], "corner": 1, "fill": "#3A2A1A" }
+      ] },
+      { "type": "button", "frame": [250, 95, 30, 30], "action": "playPause", "style": "none", "help": "Play / pause" },
+      { "type": "ellipse", "frame": [282, 92, 6, 6], "fill": "#FF5A3A", "visible": "playing" },
+      { "type": "ellipse", "frame": [282, 92, 6, 6], "fill": "#00000080", "visible": "!playing" },
+
+      { "type": "button", "frame": [12, 129, 24, 16], "action": "previous", "label": "|◀" },
+      { "type": "button", "frame": [38, 129, 24, 16], "action": "playPause", "label": "▶" },
+      { "type": "button", "frame": [64, 129, 24, 16], "action": "pause", "label": "Ⅱ" },
+      { "type": "button", "frame": [90, 129, 24, 16], "action": "stop", "label": "■" },
+      { "type": "button", "frame": [116, 129, 24, 16], "action": "next", "label": "▶|" },
+      { "type": "button", "frame": [142, 129, 24, 16], "action": "add", "label": "⏏" },
+      { "type": "button", "frame": [176, 129, 24, 16], "action": "equalizer", "label": "EQ" },
+      { "type": "button", "frame": [202, 129, 24, 16], "action": "playlist", "label": "PL" },
+      { "type": "button", "frame": [228, 129, 24, 16], "action": "skins", "label": "SK" },
+      { "type": "button", "frame": [254, 129, 36, 16], "action": "shuffle", "label": "{shuffle}" }
+    ]
+  }
+}

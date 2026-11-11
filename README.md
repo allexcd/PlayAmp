@@ -1,6 +1,6 @@
-<p align="center"><img src="docs/icon.png" width="128" alt="Mac-Amp icon"></p>
+<p align="center"><img src="docs/icon.png" width="128" alt="PlayAmp icon"></p>
 
-<h1 align="center">Mac-Amp</h1>
+<h1 align="center">PlayAmp</h1>
 
 <p align="center">A native, offline Mac music player with the feel of a late-90s desktop player:<br>
 three tiny snap-together windows, a spectrum analyzer, a ten-band equalizer and swappable skins.</p>
@@ -11,15 +11,15 @@ three tiny snap-together windows, a spectrum analyzer, a ten-band equalizer and 
   <img src="docs/cassette.png" width="300" alt="Cassette Deck skin">
 </p>
 
-Mac-Amp plays your local music files: no accounts, no streaming, no library import. Drop files or folders on it and press play. It's written in Swift with SwiftUI and AppKit, and uses [SFBAudioEngine](https://github.com/sbooth/SFBAudioEngine) for decoding.
+PlayAmp plays your local music files: no accounts, no streaming, no library import. Drop files or folders on it and press play. It's written in Swift with SwiftUI and AppKit, and uses [SFBAudioEngine](https://github.com/sbooth/SFBAudioEngine) for decoding.
 
-> Mac-Amp is an independent, original project inspired by the desktop music players of the late 1990s. All code, artwork and skins are its own, and it is not affiliated with any other player or company.
+> PlayAmp is an independent, original project inspired by the desktop music players of the late 1990s. All code, artwork and skins are its own, and it is not affiliated with any other player or company.
 
 ## Contents
 
 - [Features](#features)
 - [Install and run](#install-and-run)
-- [Using Mac-Amp](#using-mac-amp)
+- [Using PlayAmp](#using-playamp)
 - [Skins](#skins)
 - [Development](#development)
 - [License](#license)
@@ -32,9 +32,9 @@ Mac-Amp plays your local music files: no accounts, no streaming, no library impo
 - **Spectrum analyzer** with the classic motion: bars jump on the beat, fall back smoothly, and peak markers hold for a moment before dropping.
 - **Ten-band equalizer** (31 Hz–16 kHz) with preamp and automatic headroom, plus volume and balance.
 - **Playlist** with drag-to-reorder, search (⌘F or J), shuffle without repeats, repeat off/all/one, and auto-scroll to the playing track.
-- **Notch player**: rest the pointer on the MacBook's camera notch and a small player drops out of it, with the song, a live spectrum, a seek bar and controls. Works even while Mac-Amp is hidden or minimized.
+- **Notch player**: rest the pointer on the MacBook's camera notch and a small player drops out of it, with the song, a live spectrum, a seek bar and controls. Works even while PlayAmp is hidden or minimized.
 - **Media keys and Control Center**: play/pause, next, previous and scrubbing from the keyboard or the Now Playing widget.
-- **Skins that can look like anything**: recolor in a few lines, add textures, fonts and artwork, or design a completely new player in JSON with parts that move to the music (spinning records, tonearms, VU needles). Built in: Classic, an animated Cassette Deck, and a Turntable. There's also an [AI skill](skills/mac-amp-skins/SKILL.md) for building skins with an LLM.
+- **Skins that can look like anything**: recolor in a few lines, add textures, fonts and artwork, or design a completely new player in JSON with parts that move to the music (spinning records, tonearms, VU needles). Built in: Classic, an animated Cassette Deck, and a Turntable. There's also an [AI skill](skills/playamp-skins/SKILL.md) for building skins with an LLM.
 - **Picks up where you left off**: queue, position, EQ, volume, skin and window layout are restored at launch, without auto-playing.
 - **Private and light**: sandboxed with read-only access to the files you choose; uses about 0.2% CPU when idle.
 
@@ -42,14 +42,14 @@ Mac-Amp plays your local music files: no accounts, no streaming, no library impo
 
 ### Download (easiest)
 
-1. Download `MacAmp-<version>-macOS-arm64.zip` from the [latest release](https://github.com/allexcd/MacAmp/releases/latest) and double-click it to unzip.
-2. Drag **MacAmp.app** into your **Applications** folder.
-3. Open it. The app isn't notarized by Apple yet, so the first launch is blocked with a warning. Click **Done**, then go to **System Settings → Privacy & Security**, scroll down and click **Open Anyway** next to the Mac-Amp message. You only need to do this once.
+1. Download `PlayAmp-<version>-macOS-arm64.zip` from the [latest release](https://github.com/allexcd/PlayAmp/releases/latest) and double-click it to unzip.
+2. Drag **PlayAmp.app** into your **Applications** folder.
+3. Open it. The app isn't notarized by Apple yet, so the first launch is blocked with a warning. Click **Done**, then go to **System Settings → Privacy & Security**, scroll down and click **Open Anyway** next to the PlayAmp message. You only need to do this once.
 
 Prefer the Terminal? This clears the download flag instead:
 
 ```bash
-xattr -dr com.apple.quarantine /Applications/MacAmp.app
+xattr -dr com.apple.quarantine /Applications/PlayAmp.app
 ```
 
 Needs a Mac with **Apple Silicon** (M1 or newer) and **macOS 15** (Sequoia) or newer.
@@ -59,11 +59,11 @@ Needs a Mac with **Apple Silicon** (M1 or newer) and **macOS 15** (Sequoia) or n
 Requirements: Apple Silicon, macOS 15 or newer, and **Xcode 16** or newer (installed from the App Store and opened once so it can finish setting up).
 
 ```bash
-git clone https://github.com/allexcd/MacAmp.git
+git clone https://github.com/allexcd/PlayAmp.git
 ```
 
 ```bash
-cd MacAmp
+cd PlayAmp
 ```
 
 ```bash
@@ -71,25 +71,35 @@ cd MacAmp
 ```
 
 ```bash
-open dist/MacAmp.app
+open dist/PlayAmp.app
 ```
 
-The first build downloads the codec libraries (pinned in `Package.resolved`); later builds work offline. The result, `dist/MacAmp.app`, is a self-contained app. Drag it into `/Applications` if you want to keep it.
+The first build downloads the codec libraries (pinned in `Package.resolved`); later builds work offline. The result, `dist/PlayAmp.app`, is a self-contained app. Drag it into `/Applications` if you want to keep it.
 
 The app is signed only for the Mac that built it. If you copy it to another Mac, allow it once with **Open Anyway** as described in the download steps.
 
 ### Run from Xcode
 
-Open `MacAmp.xcodeproj`, pick the **MacAmp** scheme and press **Run** (⌘R). Xcode embeds and signs the codec frameworks for you.
+Open `PlayAmp.xcodeproj`, pick the **PlayAmp** scheme and press **Run** (⌘R). Xcode embeds and signs the codec frameworks for you.
 
-## Using Mac-Amp
+## Using PlayAmp
 
 ### Adding music
 
 - Press **⌘O** or the **⏏** button and pick files or folders, or
 - drag files or folders onto the player or playlist.
 
-Folders are scanned recursively (hidden files and symlinks are skipped). Mac-Amp never copies, changes or deletes your audio files; removing a track only removes it from the queue.
+Folders are scanned recursively (hidden files and symlinks are skipped). PlayAmp never copies, changes or deletes your audio files; removing a track only removes it from the queue.
+
+### Coming from Mac-Amp?
+
+PlayAmp was called Mac-Amp up to version 0.3.2. Because the app's identity changed, PlayAmp starts with an empty playlist and default settings. To bring your skins and settings across, quit both apps and run:
+
+```bash
+cp -R ~/Library/Containers/dev.macamp.prototype/Data/Library/Application\ Support/MacAmp/. ~/Library/Containers/com.allexcd.playamp/Data/Library/Application\ Support/PlayAmp/
+```
+
+Open PlayAmp once before running it, so its folder exists. If tracks then fail with a permission message, remove them and add your music folder again: macOS grants file access per app.
 
 ### The windows
 
@@ -102,7 +112,7 @@ Folders are scanned recursively (hidden files and symlinks are skipped). Mac-Amp
 
 ### The notch player
 
-On a MacBook with a camera notch, rest the pointer on the notch for a moment and a black mini player grows out of it: song and artist, a spinning record, the spectrum, a seek bar you can drag, and shuffle, previous, play/pause and next buttons. The window button brings the full player back. Move the pointer away and it tucks back into the notch. It stays available while Mac-Amp is hidden or minimized, and takes its accent colors from the current skin.
+On a MacBook with a camera notch, rest the pointer on the notch for a moment and a black mini player grows out of it: song and artist, a spinning record, the spectrum, a seek bar you can drag, and shuffle, previous, play/pause and next buttons. The window button brings the full player back. Move the pointer away and it tucks back into the notch. It stays available while PlayAmp is hidden or minimized, and takes its accent colors from the current skin.
 
 On Macs without a notch, the same hover spot sits at the top centre of the main screen. Turn it off with **View → Notch Player**.
 
@@ -130,15 +140,15 @@ Drag any window by its title bar. Bring a panel within about 24 points of anothe
 
 ### Where your settings live
 
-Mac-Amp is sandboxed, so its data lives in its container:
+PlayAmp is sandboxed, so its data lives in its container:
 
 ```
-~/Library/Containers/dev.macamp.prototype/Data/Library/Application Support/MacAmp/
+~/Library/Containers/com.allexcd.playamp/Data/Library/Application Support/PlayAmp/
 ├── session.json   queue, position, EQ, volume, skin, visibility
 └── Skins/         your custom skins
 ```
 
-Window positions are stored in the app's preferences. Delete the `MacAmp` folder to start fresh.
+Window positions are stored in the app's preferences. Delete the `PlayAmp` folder to start fresh.
 
 ## Skins
 
@@ -194,37 +204,37 @@ After editing, press **RELOAD** in the Skins panel.
 
 ### Skins from other people
 
-A skin is only data: colors, pictures, fonts and a description of shapes. It can't run code. Mac-Amp also treats skin files as untrusted:
+A skin is only data: colors, pictures, fonts and a description of shapes. It can't run code. PlayAmp also treats skin files as untrusted:
 
 - A skin can only use files inside its own folder. Absolute paths, `..` and symlinks that lead elsewhere are refused.
 - Sizes and counts are limited (window size, number of elements, picture dimensions), so a broken or hostile skin can't hang the app or fill the screen.
-- If a skin ever stops Mac-Amp from opening properly, hold **Option** while launching it to go back to the Classic skin.
+- If a skin ever stops PlayAmp from opening properly, hold **Option** while launching it to go back to the Classic skin.
 
 ### Check and preview skins without opening the app
 
 The app's executable doubles as a skin tool:
 
 ```bash
-MacAmp --validate-skin "My Skin"
+PlayAmp --validate-skin "My Skin"
 ```
 
 ```bash
-MacAmp --render-skin "My Skin" --window all --state playing --progress 0.4
+PlayAmp --render-skin "My Skin" --window all --state playing --progress 0.4
 ```
 
 ```bash
-MacAmp --skin-reference
+PlayAmp --skin-reference
 ```
 
 `--validate-skin` explains each problem with its exact location, `--render-skin` writes a preview image, and `--skin-reference` prints every color, image slot, font role, element type, binding, placeholder and action.
 
-`MacAmp` here is `/Applications/MacAmp.app/Contents/MacOS/MacAmp`, or `swift run MacAmp` in a source checkout. The installed app is sandboxed, so it can only read skins in its own Skins folder: `~/Library/Containers/dev.macamp.prototype/Data/Library/Application Support/MacAmp/Skins`.
+`PlayAmp` here is `/Applications/PlayAmp.app/Contents/MacOS/PlayAmp`, or `swift run PlayAmp` in a source checkout. The installed app is sandboxed, so it can only read skins in its own Skins folder: `~/Library/Containers/com.allexcd.playamp/Data/Library/Application Support/PlayAmp/Skins`.
 
 ### Build skins with an AI assistant
 
-[`skills/mac-amp-skins`](skills/mac-amp-skins) is a skill that teaches an LLM to design Mac-Amp skins: a workflow (brief → JSON and images → validate → preview → iterate), recipes for common effects, working examples, and a full [reference](skills/mac-amp-skins/reference.md) generated from the code.
+[`skills/playamp-skins`](skills/playamp-skins) is a skill that teaches an LLM to design PlayAmp skins: a workflow (brief → JSON and images → validate → preview → iterate), recipes for common effects, working examples, and a full [reference](skills/playamp-skins/reference.md) generated from the code.
 
-- **Claude Code:** copy the folder to `~/.claude/skills/`, then ask something like "make me a Mac-Amp skin that looks like a 1980s boombox".
+- **Claude Code:** copy the folder to `~/.claude/skills/`, then ask something like "make me a PlayAmp skin that looks like a 1980s boombox".
 - **Other assistants:** give them `SKILL.md` and `reference.md`.
 
 ## Development
@@ -233,13 +243,13 @@ MacAmp --skin-reference
 
 ```
 Sources/
-  MacAmpCore/          Pure logic, no UI (unit-tested)
+  PlayAmpCore/         Pure logic, no UI (unit-tested)
     Session.swift        Saved state, queue, shuffle/repeat decisions, JSON persistence
     WindowDocking.swift  Snapping and "which windows are attached" math
     Skin.swift           Skin format, built-in skins, loading and inheritance
     SkinLayout.swift     Layout format (elements, paints, bindings) and the skin validator
-    BuiltInLayouts.swift The Turntable, written in the layout JSON format
-  MacAmp/              The app
+    BuiltInLayouts.swift  The Turntable, written in the layout JSON format
+  PlayAmp/             The app
     App.swift            Windows (creation, dragging, docking), menus, app delegate
     Model.swift          Observable app state, playback control, import, Now Playing
     Playback.swift       Audio engine, equalizer, spectrum analysis
@@ -249,7 +259,7 @@ Sources/
     Layout.swift         Draws layout skins: elements, live bindings, actions, sliders
     SkinTool.swift       --validate-skin, --render-skin and --skin-reference
     Theme.swift          Turns a skin into SwiftUI colors, images, fonts and shapes (the "palette")
-skills/mac-amp-skins/  AI skill for designing skins, its reference and example skins
+skills/playamp-skins/  AI skill for designing skins, its reference and example skins
 Vendor/SFBAudioEngine/ Trimmed copy of the audio engine (see its VENDORED.md)
 Tests/                 Unit and playback tests
 scripts/               Build, packaging, fixtures, project and icon generation
@@ -287,7 +297,7 @@ Playback tests briefly play quiet tones and need an audio output device; they an
 
 | Script | Use it when |
 |---|---|
-| `scripts/build-app.sh` | Building `dist/MacAmp.app` (release build, codec frameworks embedded, licenses copied, signed). |
+| `scripts/build-app.sh` | Building `dist/PlayAmp.app` (release build, codec frameworks embedded, licenses copied, signed). |
 | `scripts/generate-project.py` | **You add or remove a source file.** The Xcode project lists files explicitly and is generated from the `Sources/` folders. |
 | `scripts/make-icon.swift` | Changing the app icon. It draws the icon in code and writes `Config/AppIcon.icns`: `swift scripts/make-icon.swift`. |
 | `scripts/generate-fixtures.sh` | Creating the test audio files. |
@@ -296,7 +306,7 @@ Playback tests briefly play quiet tones and need an audio output device; they an
 ### Good first changes
 
 - **A new skin or player design**: try it as a JSON skin first (see [Skins](#skins)). Most designs need no Swift at all. To make one built in, add its layout to `BuiltInLayouts.swift` and a `Skin` to `Skin.builtIn`, as the Turntable does.
-- **A new layout element, binding or action**: add it to the lists in `SkinLayout.swift` (so the validator and reference know it), draw it in `LayoutRenderer`, then regenerate `skills/mac-amp-skins/reference.md` with `--skin-reference`. A test fails if you forget.
+- **A new layout element, binding or action**: add it to the lists in `SkinLayout.swift` (so the validator and reference know it), draw it in `LayoutRenderer`, then regenerate `skills/playamp-skins/reference.md` with `--skin-reference`. A test fails if you forget.
 - **A new window**: add a case to `Windows.Panel`, its size in `update(_:)`, and its view; docking and snapping come for free.
 
 ### Not done yet
@@ -305,7 +315,7 @@ Named playlists, M3U import/export, library indexing, streaming, guaranteed gapl
 
 ## License
 
-Mac-Amp's own code is released under the [MIT License](LICENSE).
+PlayAmp's own code is released under the [MIT License](LICENSE).
 
 Everything it's built from is under permissive licenses, with no LGPL or GPL code:
 

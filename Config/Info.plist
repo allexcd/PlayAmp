@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Mac-Amp</string>
+	<string>PlayAmp</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -28,19 +28,25 @@
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>MacAmp</string>
+	<string>PlayAmp</string>
 	<key>CFBundleIconFile</key>
 	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
-	<string>dev.macamp.prototype</string>
+	<string>com.allexcd.playamp</string>
 	<key>CFBundleName</key>
-	<string>Mac-Amp</string>
+	<string>PlayAmp</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.3.2</string>
+	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
-	<string>6</string>
+	<string>7</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.music</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2026 AlexCD. MIT License.</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSMinimumSystemVersion</key>
 	<string>15.0</string>
 	<key>NSHighResolutionCapable</key>

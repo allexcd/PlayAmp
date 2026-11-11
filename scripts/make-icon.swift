@@ -1,4 +1,4 @@
-// Draws the Mac-Amp app icon (original artwork) and writes Config/AppIcon.icns.
+// Draws the PlayAmp app icon (original artwork) and writes Config/AppIcon.icns.
 // Run: swift scripts/make-icon.swift
 import AppKit
 

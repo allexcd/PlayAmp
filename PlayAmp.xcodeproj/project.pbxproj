@@ -1,0 +1,46 @@
+// !$*UTF8*$!
+{archiveVersion = 1; classes = {}; objectVersion = 56; objects = {
+18C453F3FBCBCF0D57CFFCF5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmp/App.swift"; sourceTree = SOURCE_ROOT; };
+A249DDA19BB41A53BB8F2494 = {isa = PBXBuildFile; fileRef = 18C453F3FBCBCF0D57CFFCF5; };
+87F5DFC16573BC4C08A82E26 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmp/Cassette.swift"; sourceTree = SOURCE_ROOT; };
+E251C44180A040277A87004A = {isa = PBXBuildFile; fileRef = 87F5DFC16573BC4C08A82E26; };
+1E918260654C29AFF3974A4C = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmp/Layout.swift"; sourceTree = SOURCE_ROOT; };
+0579F0401B93CB51AD18E701 = {isa = PBXBuildFile; fileRef = 1E918260654C29AFF3974A4C; };
+85E6BC6EEC8493EE90B3D54B = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmp/Model.swift"; sourceTree = SOURCE_ROOT; };
+913CF176CAA467D628430FE0 = {isa = PBXBuildFile; fileRef = 85E6BC6EEC8493EE90B3D54B; };
+25E722FBFD8C5D51268A7D2C = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmp/Notch.swift"; sourceTree = SOURCE_ROOT; };
+78CCBB950227BA8ABEFF1167 = {isa = PBXBuildFile; fileRef = 25E722FBFD8C5D51268A7D2C; };
+7A81670DCE95330D3D6B4868 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmp/Playback.swift"; sourceTree = SOURCE_ROOT; };
+D25E1167EFA93C6AC2275532 = {isa = PBXBuildFile; fileRef = 7A81670DCE95330D3D6B4868; };
+C1A7267BCC039678BC34AD60 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmp/SkinTool.swift"; sourceTree = SOURCE_ROOT; };
+0719C594A124612CF001AF57 = {isa = PBXBuildFile; fileRef = C1A7267BCC039678BC34AD60; };
+F2B85DB6D4D477529F067213 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmp/SkinsPanel.swift"; sourceTree = SOURCE_ROOT; };
+18F6DB36BA5E441E11AC99BD = {isa = PBXBuildFile; fileRef = F2B85DB6D4D477529F067213; };
+DA4D3AFEB43FF0B0BB796F87 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmp/Theme.swift"; sourceTree = SOURCE_ROOT; };
+A04FAA10422B27AC5681DB27 = {isa = PBXBuildFile; fileRef = DA4D3AFEB43FF0B0BB796F87; };
+5B0CB37E48BB03CBE7CC2B42 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmp/Views.swift"; sourceTree = SOURCE_ROOT; };
+4AF090DF56D724E72C1CAF6A = {isa = PBXBuildFile; fileRef = 5B0CB37E48BB03CBE7CC2B42; };
+930CA5B71BB44921AD4004EB = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmpCore/BuiltInLayouts.swift"; sourceTree = SOURCE_ROOT; };
+71E7A1B4CDC1A05F409245FA = {isa = PBXBuildFile; fileRef = 930CA5B71BB44921AD4004EB; };
+8C6E898922B353A521F66E9E = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmpCore/Session.swift"; sourceTree = SOURCE_ROOT; };
+6A483D94B26B20FA07B3CE2C = {isa = PBXBuildFile; fileRef = 8C6E898922B353A521F66E9E; };
+FB50093E2DFD6465908A65B1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmpCore/Skin.swift"; sourceTree = SOURCE_ROOT; };
+B8B5AD2E8DD22BBA2E69CD77 = {isa = PBXBuildFile; fileRef = FB50093E2DFD6465908A65B1; };
+76EABA16C3E7F344000161EE = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmpCore/SkinLayout.swift"; sourceTree = SOURCE_ROOT; };
+CA11150C60E01F1CE7E8AD4F = {isa = PBXBuildFile; fileRef = 76EABA16C3E7F344000161EE; };
+DF1BCD2FCFF2BFF7EEC808A4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/PlayAmpCore/WindowDocking.swift"; sourceTree = SOURCE_ROOT; };
+B049E981774E4CF2A95920C6 = {isa = PBXBuildFile; fileRef = DF1BCD2FCFF2BFF7EEC808A4; };
+38A007151ABE87CC01A5B6E9 = {isa = PBXFileReference; explicitFileType = wrapper.application; path = PlayAmp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+64292B1C2B2E13EAD8788FC8 = {isa = PBXGroup; children = (18C453F3FBCBCF0D57CFFCF5,87F5DFC16573BC4C08A82E26,1E918260654C29AFF3974A4C,85E6BC6EEC8493EE90B3D54B,25E722FBFD8C5D51268A7D2C,7A81670DCE95330D3D6B4868,C1A7267BCC039678BC34AD60,F2B85DB6D4D477529F067213,DA4D3AFEB43FF0B0BB796F87,5B0CB37E48BB03CBE7CC2B42,930CA5B71BB44921AD4004EB,8C6E898922B353A521F66E9E,FB50093E2DFD6465908A65B1,76EABA16C3E7F344000161EE,DF1BCD2FCFF2BFF7EEC808A4,38A007151ABE87CC01A5B6E9); sourceTree = "<group>"; };
+41FFE5457D1A557C3317F2E5 = {isa = XCLocalSwiftPackageReference; relativePath = Vendor/SFBAudioEngine; };
+E9FAD0C6CD43534327C0AF90 = {isa = XCSwiftPackageProductDependency; package = 41FFE5457D1A557C3317F2E5; productName = SFBAudioEngine; };
+4F0AA52D656A3D75867F784B = {isa = PBXBuildFile; productRef = E9FAD0C6CD43534327C0AF90; };
+BCE16DD0260827ECF338C787 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A249DDA19BB41A53BB8F2494,E251C44180A040277A87004A,0579F0401B93CB51AD18E701,913CF176CAA467D628430FE0,78CCBB950227BA8ABEFF1167,D25E1167EFA93C6AC2275532,0719C594A124612CF001AF57,18F6DB36BA5E441E11AC99BD,A04FAA10422B27AC5681DB27,4AF090DF56D724E72C1CAF6A,71E7A1B4CDC1A05F409245FA,6A483D94B26B20FA07B3CE2C,B8B5AD2E8DD22BBA2E69CD77,CA11150C60E01F1CE7E8AD4F,B049E981774E4CF2A95920C6); runOnlyForDeploymentPostprocessing = 0; };
+7561BFB015D8F536760CB671 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (4F0AA52D656A3D75867F784B); runOnlyForDeploymentPostprocessing = 0; };
+BD604D99E75E45D38BC7AC8F = {isa = XCBuildConfiguration; name = Debug; buildSettings = {SDKROOT = macosx; ENABLE_USER_SCRIPT_SANDBOXING = NO; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks"; MACOSX_DEPLOYMENT_TARGET = 15.0; ARCHS = arm64; SWIFT_VERSION = 5.0; PRODUCT_NAME = PlayAmp; PRODUCT_BUNDLE_IDENTIFIER = com.allexcd.playamp; INFOPLIST_FILE = Config/Info.plist; CODE_SIGN_ENTITLEMENTS = Config/PlayAmp.entitlements; CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; ENABLE_APP_SANDBOX = YES; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; }; };
+D41F56CEA1AC933D25C57AEB = {isa = XCBuildConfiguration; name = Release; buildSettings = {SDKROOT = macosx; ENABLE_USER_SCRIPT_SANDBOXING = NO; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks"; MACOSX_DEPLOYMENT_TARGET = 15.0; ARCHS = arm64; SWIFT_VERSION = 5.0; PRODUCT_NAME = PlayAmp; PRODUCT_BUNDLE_IDENTIFIER = com.allexcd.playamp; INFOPLIST_FILE = Config/Info.plist; CODE_SIGN_ENTITLEMENTS = Config/PlayAmp.entitlements; CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; ENABLE_APP_SANDBOX = YES; SWIFT_OPTIMIZATION_LEVEL = "-O"; }; };
+DFBA7AADE0868074C2861C98 = {isa = XCConfigurationList; buildConfigurations = (BD604D99E75E45D38BC7AC8F,D41F56CEA1AC933D25C57AEB); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+CFFF27C96089B93150F3553B = {isa = PBXShellScriptBuildPhase; buildActionMask = 2147483647; files = (); inputPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/zsh; shellScript = "\"$SRCROOT/scripts/embed-frameworks.sh\""; };
+0E8A3AD980EC179856012B7E = {isa = PBXNativeTarget; buildConfigurationList = DFBA7AADE0868074C2861C98; buildPhases = (BCE16DD0260827ECF338C787,7561BFB015D8F536760CB671,CFFF27C96089B93150F3553B); buildRules = (); dependencies = (); name = PlayAmp; productName = PlayAmp; productReference = 38A007151ABE87CC01A5B6E9; productType = "com.apple.product-type.application"; packageProductDependencies = (E9FAD0C6CD43534327C0AF90); };
+98F54143AB4E86B28C3AFEE0 = {isa = PBXProject; attributes = {LastUpgradeCheck = 1600; }; buildConfigurationList = DFBA7AADE0868074C2861C98; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; knownRegions = (en,Base); mainGroup = 64292B1C2B2E13EAD8788FC8; projectDirPath = ""; projectRoot = ""; targets = (0E8A3AD980EC179856012B7E); packageReferences = (41FFE5457D1A557C3317F2E5); };
+}; rootObject = 98F54143AB4E86B28C3AFEE0; }

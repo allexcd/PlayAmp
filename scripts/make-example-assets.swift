@@ -1,9 +1,9 @@
-// Draws the images used by the example skins in skills/mac-amp-skins/examples.
+// Draws the images used by the example skins in skills/playamp-skins/examples.
 // Run: swift scripts/make-example-assets.swift
 import AppKit
 
 let root = URL(filePath: CommandLine.arguments[0]).deletingLastPathComponent().deletingLastPathComponent()
-let walnut = root.appending(path: "skills/mac-amp-skins/examples/walnut")
+let walnut = root.appending(path: "skills/playamp-skins/examples/walnut")
 
 func png(_ size: Int, _ name: String, draw: (CGContext, CGFloat) -> Void) throws {
     let rep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: size, pixelsHigh: size, bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
