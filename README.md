@@ -101,6 +101,8 @@ cp -R ~/Library/Containers/dev.macamp.prototype/Data/Library/Application\ Suppor
 
 Open PlayAmp once before running it, so its folder exists. If tracks then fail with a permission message, remove them and add your music folder again: macOS grants file access per app.
 
+The copied **VU Radio** example still shows the old name in its title. To get the updated one, delete the `vu-radio` folder from PlayAmp's Skins folder, then press **FOLDER** in the Skins panel: PlayAmp puts a fresh copy back.
+
 ### The windows
 
 | Window | What it does |

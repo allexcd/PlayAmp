@@ -168,7 +168,8 @@ import PlayAmpCore
         let manager = FileManager.default
         try? manager.createDirectory(at: skinFolder, withIntermediateDirectories: true)
         let readme = skinFolder.appendingPathComponent("README.txt"), example = skinFolder.appendingPathComponent("Example.json")
-        if !manager.fileExists(atPath: readme.path) { try? SkinLibrary.readme().write(to: readme, atomically: true, encoding: .utf8) }
+        // The README is the app's own guide, so it is always refreshed to match this version.
+        try? SkinLibrary.readme().write(to: readme, atomically: true, encoding: .utf8)
         if !manager.fileExists(atPath: example.path) { try? SkinLibrary.exampleJSON().write(to: example, atomically: true, encoding: .utf8) }
         // Example skins bundled with the app (VU Radio, Walnut Turntable, Midnight Tape); never overwrite edits.
         if let bundled = Bundle.main.resourceURL?.appendingPathComponent("SkinExamples"),
