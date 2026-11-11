@@ -13,7 +13,7 @@ three tiny snap-together windows, a spectrum analyzer, a ten-band equalizer and 
 
 Mac-Amp plays your local music files: no accounts, no streaming, no library import. Drop files or folders on it and press play. It's written in Swift with SwiftUI and AppKit, and uses [SFBAudioEngine](https://github.com/sbooth/SFBAudioEngine) for decoding.
 
-> Mac-Amp is an independent project inspired by classic desktop players. It contains no Winamp code, artwork or skins and is not affiliated with Winamp.
+> Mac-Amp is an independent, original project inspired by the desktop music players of the late 1990s. All code, artwork and skins are its own, and it is not affiliated with any other player or company.
 
 ## Contents
 
@@ -74,7 +74,7 @@ cd MacAmp
 open dist/MacAmp.app
 ```
 
-The first build downloads SFBAudioEngine and its codecs (pinned in `Package.resolved`); later builds work offline. The result, `dist/MacAmp.app`, is a self-contained app. Drag it into `/Applications` if you want to keep it.
+The first build downloads the codec libraries (pinned in `Package.resolved`); later builds work offline. The result, `dist/MacAmp.app`, is a self-contained app. Drag it into `/Applications` if you want to keep it.
 
 The app is signed only for the Mac that built it. If you copy it to another Mac, allow it once with **Open Anyway** as described in the download steps.
 
@@ -250,6 +250,7 @@ Sources/
     SkinTool.swift       --validate-skin, --render-skin and --skin-reference
     Theme.swift          Turns a skin into SwiftUI colors, images, fonts and shapes (the "palette")
 skills/mac-amp-skins/  AI skill for designing skins, its reference and example skins
+Vendor/SFBAudioEngine/ Trimmed copy of the audio engine (see its VENDORED.md)
 Tests/                 Unit and playback tests
 scripts/               Build, packaging, fixtures, project and icon generation
 Config/                Info.plist, entitlements, app icon
@@ -300,10 +301,16 @@ Playback tests briefly play quiet tones and need an audio output device; they an
 
 ### Not done yet
 
-Named playlists, M3U import/export, library indexing, streaming, Winamp `.wsz` skins, guaranteed gapless playback, and automatic updates. Testing has been on recent macOS; macOS 15, other output devices, and VoiceOver need more checking.
+Named playlists, M3U import/export, library indexing, streaming, guaranteed gapless playback, and automatic updates. Testing has been on recent macOS; macOS 15, other output devices, and VoiceOver need more checking.
 
 ## License
 
 Mac-Amp's own code is released under the [MIT License](LICENSE).
 
-It depends on SFBAudioEngine (MIT) and the audio codecs it bundles. Several of those are licensed under the LGPL or other terms (LAME, mpg123, libsndfile, Musepack, TTA, TagLib, Monkey's Audio). Their notices are in [`Licenses/`](Licenses) and [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). If you distribute built copies of the app, review those terms first; the collected notices alone don't satisfy every obligation.
+Everything it's built from is under permissive licenses, with no LGPL or GPL code:
+
+- A trimmed copy of [SFBAudioEngine](https://github.com/sbooth/SFBAudioEngine) (MIT) in [`Vendor/SFBAudioEngine`](Vendor/SFBAudioEngine/VENDORED.md), keeping only the player and the decoders the app uses.
+- The Xiph libraries for Ogg Vorbis, Opus and FLAC (BSD).
+- MP3, WAV, AIFF, AAC and M4A are decoded by macOS itself.
+
+The notices are in [`Licenses/`](Licenses) and [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md), and ship inside the app.

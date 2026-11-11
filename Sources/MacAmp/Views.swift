@@ -228,7 +228,7 @@ struct PlayerView: View {
         for provider in providers { _ = provider.loadObject(ofClass: URL.self) { url, _ in if let url { Task { @MainActor in model.add([url]) } } } }; return true
     }
 }
-/// Winamp-style analyzer motion: bars jump up instantly and fall back at a steady rate;
+/// Classic analyzer motion: bars jump up instantly and fall back at a steady rate;
 /// peak markers hold briefly at the top, then drop with gravity.
 final class SpectrumMotion {
     private(set) var levels = Array(repeating: Float(0), count: Spectrum.bands)
