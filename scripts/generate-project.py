@@ -14,7 +14,8 @@ for p in sorted((root/'Sources/MacAmpCore').glob('*.swift')):
     builds.append(add('build'+p.name,'{isa = PBXBuildFile; fileRef = '+f+'; }'))
 product=add('product','{isa = PBXFileReference; explicitFileType = wrapper.application; path = MacAmp.app; sourceTree = BUILT_PRODUCTS_DIR; }')
 group=add('group','{isa = PBXGroup; children = ('+','.join(files+[product])+'); sourceTree = "<group>"; }')
-remote=add('remote','{isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/sbooth/SFBAudioEngine"; requirement = {kind = exactVersion; version = 0.14.0; }; }')
+# The audio engine is a trimmed copy inside the repo (see Vendor/SFBAudioEngine/VENDORED.md).
+remote=add('remote','{isa = XCLocalSwiftPackageReference; relativePath = Vendor/SFBAudioEngine; }')
 dep=add('dep','{isa = XCSwiftPackageProductDependency; package = '+remote+'; productName = SFBAudioEngine; }')
 link=add('link','{isa = PBXBuildFile; productRef = '+dep+'; }')
 sources=add('sources','{isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ('+','.join(builds)+'); runOnlyForDeploymentPostprocessing = 0; }')

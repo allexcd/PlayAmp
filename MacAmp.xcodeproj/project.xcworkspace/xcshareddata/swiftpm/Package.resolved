@@ -1,5 +1,5 @@
 {
-  "originHash" : "aaf1591a739186db110215851ff16f2eb34a68e39d28a39a785560537a39d049",
+  "originHash" : "21aa1a20aa1c8816702f340f24d69fdca94d5100b91cad9f76e855e8aa9531aa",
   "pins" : [
     {
       "identity" : "avfaudioextensions",
@@ -8,24 +8,6 @@
       "state" : {
         "revision" : "276deda6780b974be0d3dacf1bb0a890754b9e1b",
         "version" : "0.5.1"
-      }
-    },
-    {
-      "identity" : "cdumb",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sbooth/CDUMB",
-      "state" : {
-        "revision" : "0cceb710cad35b9aaf5bb6b65faf71436b6aa7c3",
-        "version" : "2.0.3"
-      }
-    },
-    {
-      "identity" : "cspeex",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sbooth/CSpeex",
-      "state" : {
-        "revision" : "ba33fd93d54d8e7fc93b8a1d27991e756bac7345",
-        "version" : "1.2.1"
       }
     },
     {
@@ -56,30 +38,12 @@
       }
     },
     {
-      "identity" : "cxxmonkeysaudio",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sbooth/CXXMonkeysAudio",
-      "state" : {
-        "revision" : "79cafc4dfccff8b9d3065cbf198f6e171a9409c3",
-        "version" : "12.13.0"
-      }
-    },
-    {
       "identity" : "cxxqueue",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sbooth/CXXQueue",
       "state" : {
         "revision" : "b3b39f38e81d1fc5294ae99c81e019e1fe3b8582",
         "version" : "0.1.1"
-      }
-    },
-    {
-      "identity" : "cxxtaglib",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sbooth/CXXTagLib",
-      "state" : {
-        "revision" : "9e499ea0a69d107791ac0a2fe9d6a59cf401c6f9",
-        "version" : "2.3.2"
       }
     },
     {
@@ -101,33 +65,6 @@
       }
     },
     {
-      "identity" : "lame-binary-xcframework",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sbooth/lame-binary-xcframework",
-      "state" : {
-        "revision" : "07703e040231d50f2e7f160c670f356f129a00e4",
-        "version" : "0.1.2"
-      }
-    },
-    {
-      "identity" : "mpc-binary-xcframework",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sbooth/mpc-binary-xcframework",
-      "state" : {
-        "revision" : "de4b45fa64ed88467806c50217e9da7032a99d80",
-        "version" : "0.1.2"
-      }
-    },
-    {
-      "identity" : "mpg123-binary-xcframework",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sbooth/mpg123-binary-xcframework",
-      "state" : {
-        "revision" : "acc2c651cbd8fff8bc8cdeb4faf14b35ba81adee",
-        "version" : "0.3.1"
-      }
-    },
-    {
       "identity" : "ogg-binary-xcframework",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sbooth/ogg-binary-xcframework",
@@ -146,48 +83,12 @@
       }
     },
     {
-      "identity" : "sfbaudioengine",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sbooth/SFBAudioEngine",
-      "state" : {
-        "revision" : "7dea577e74723a182189687ab84d962c4607c3d5",
-        "version" : "0.14.0"
-      }
-    },
-    {
-      "identity" : "sndfile-binary-xcframework",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sbooth/sndfile-binary-xcframework",
-      "state" : {
-        "revision" : "52f73460dc04ba789ad3007ad004faa328b732dd",
-        "version" : "0.1.2"
-      }
-    },
-    {
-      "identity" : "tta-cpp-binary-xcframework",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sbooth/tta-cpp-binary-xcframework",
-      "state" : {
-        "revision" : "b68cf8a127936434cae93aa2c613d4b47eb34de4",
-        "version" : "0.1.2"
-      }
-    },
-    {
       "identity" : "vorbis-binary-xcframework",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sbooth/vorbis-binary-xcframework",
       "state" : {
         "revision" : "842020eabcebe410e698c68545d6597b2d232e51",
         "version" : "0.1.2"
-      }
-    },
-    {
-      "identity" : "wavpack-binary-xcframework",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/sbooth/wavpack-binary-xcframework",
-      "state" : {
-        "revision" : "c8c2a9f930349a7209e14f6e5667fc5cc38b6c4b",
-        "version" : "0.2.0"
       }
     }
   ],

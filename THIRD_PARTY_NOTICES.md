@@ -1,7 +1,15 @@
 # Third-party software
 
-Mac-Amp's own code is MIT-licensed (see LICENSE). It uses SFBAudioEngine 0.14.0 (MIT), by Stephen F. Booth, and the transitive dependencies pinned in Package.resolved. Full upstream license notices collected from the resolved packages are in Licenses/ and must accompany builds.
+The app's own code is MIT-licensed (see LICENSE). It is built from the following, all under permissive licenses. The full notices are in `Licenses/` and ship inside the app.
 
-The engine's default package includes LGPL components: LAME, mpg123, libsndfile, Musepack, and TTA. TagLib is dual LGPL/MPL; Monkey's Audio has its own license. The included package-wrapper notices do not necessarily contain every codec's upstream notice. This prototype is not cleared for App Store distribution: before distributing, audit every embedded binary and upstream license, collect all required notices and corresponding source/relinking materials, and either satisfy applicable terms or build a reduced engine excluding incompatible/unneeded components. Merely including this notice does not establish compliance.
+| Component | License | Used for |
+|---|---|---|
+| [SFBAudioEngine](https://github.com/sbooth/SFBAudioEngine) 0.14.0 (trimmed copy in `Vendor/SFBAudioEngine`) | MIT | player and decoder framework |
+| AVFAudioExtensions, CXXAudioRingBuffer, CXXDispatchSemaphore, CXXMessageQueue, CXXQueue, CXXUnfairLock | MIT | engine utilities |
+| libogg, libvorbis | BSD 3-Clause (Xiph.Org) | Ogg Vorbis |
+| libopus, opusfile | BSD 3-Clause (Xiph.Org and others) | Opus |
+| libFLAC | BSD 3-Clause (Xiph.Org) | FLAC |
 
-Xiph codecs (Ogg, Opus, Vorbis, FLAC) and several engine utilities use permissive licenses; see the individual notices. The player uses no Winamp artwork, logos, skin files, or source code.
+MP3, WAV, AIFF, AAC and M4A are decoded by macOS itself (Core Audio).
+
+The app contains no LGPL or GPL code. The audio engine is a reduced copy with the LGPL codec libraries (LAME, mpg123, libsndfile, Musepack, TrueAudio) and everything else the player doesn't use removed; `Vendor/SFBAudioEngine/VENDORED.md` lists exactly what was kept. `scripts/collect-licenses.py` rebuilds `Licenses/` from the packages actually pinned in `Package.resolved`.
