@@ -294,7 +294,7 @@ final class PlayerWindow: NSWindow {
     @objc func playlist() { windows.toggle(.playlist) }; @objc func eq() { windows.toggle(.equalizer) }
     @objc func resize(_ sender: NSMenuItem) { windows.scale(Double(sender.tag)) }
     @objc func hide() { NSApp.hide(nil) }; @objc func quit() { NSApp.terminate(nil) }
-    @objc func about() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:"Mac-Amp", .applicationVersion:"0.3.1", .credits:NSAttributedString(string:"Local music. Familiar little windows.\nOriginal retro artwork. Audio powered by SFBAudioEngine.\nSee THIRD_PARTY_NOTICES.md in the app resources.")]) }
+    @objc func about() { NSApp.orderFrontStandardAboutPanel(options: [.applicationName:"Mac-Amp", .applicationVersion:"0.3.2", .credits:NSAttributedString(string:"Local music. Familiar little windows.\nOriginal retro artwork. Audio powered by SFBAudioEngine.\nSee THIRD_PARTY_NOTICES.md in the app resources.")]) }
 }
 @main struct MacAmpApp {
     @MainActor static func main() {
