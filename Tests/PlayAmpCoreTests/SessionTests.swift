@@ -29,4 +29,19 @@ final class SessionTests: XCTestCase {
         XCTAssertEqual(restored.tracks, s.tracks); XCTAssertEqual(restored.selected, s.selected); XCTAssertEqual(restored.position, 42)
         XCTAssertTrue(SessionStore.load(from: url.appendingPathComponent("missing")).tracks.isEmpty)
     }
+    func testRelinkGivesTracksInsideAFolderTheNewPermission() {
+        var session = Session()
+        let old = Data([1]), new = Data([2])
+        session.tracks = [
+            Track(url: URL(fileURLWithPath: "/Music/Jukebox/wav/a.wav"), bookmark: old),
+            Track(url: URL(fileURLWithPath: "/Music/Jukebox/wav/sub/b.wav"), bookmark: old, relativePath: "b.wav"),
+            Track(url: URL(fileURLWithPath: "/Music/Jukebox/wavy/c.wav"), bookmark: old),
+            Track(url: URL(fileURLWithPath: "/Other/d.wav"), bookmark: old)
+        ]
+        XCTAssertEqual(session.relink(root: URL(fileURLWithPath: "/Music/Jukebox/wav", isDirectory: true), bookmark: new, isDirectory: true), 2)
+        XCTAssertEqual(session.tracks.map(\.bookmark), [new, new, old, old])
+        XCTAssertEqual(session.tracks.map(\.relativePath), ["a.wav", "sub/b.wav", nil, nil])
+        XCTAssertEqual(session.relink(root: URL(fileURLWithPath: "/Other/d.wav"), bookmark: new, isDirectory: false), 1)
+        XCTAssertEqual(session.tracks[3].bookmark, new); XCTAssertNil(session.tracks[3].relativePath)
+    }
 }

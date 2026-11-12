@@ -45,6 +45,7 @@ import PlayAmpCore
     private var timer: Timer?
     private var scopes: [URL] = []
     private var failed = Set<UUID>()
+    private var restoring = false
     private var loaded: UUID?
     private var pendingSeek: Double?
     private var ticks = 0
@@ -101,7 +102,12 @@ import PlayAmpCore
             var url = track.url
             if let data = track.bookmark {
                 var stale = false
-                let root = try URL(resolvingBookmarkData: data, options: [.withSecurityScope], relativeTo: nil, bookmarkDataIsStale: &stale)
+                // A saved permission only works for the app that made it (so not after the rename
+                // from Mac-Amp). Ask for the folder again instead of calling the file broken.
+                guard let root = try? URL(resolvingBookmarkData: data, options: [.withSecurityScope], relativeTo: nil, bookmarkDataIsStale: &stale) else {
+                    if recovery { throw CocoaError(.fileReadNoPermission) }
+                    restoreAccess(for: track, resume: resume); return
+                }
                 if root.startAccessingSecurityScopedResource() { scopes.append(root) }
                 url = track.relativePath.map { root.appendingPathComponent($0) } ?? root
                 if stale, let index = session.tracks.firstIndex(where: { $0.id == id }) {
@@ -129,6 +135,31 @@ import PlayAmpCore
                 self.play(next.id, recovery: true)
             }
         } else { stop() }
+    }
+    /// Asks for the track's folder again and gives every track inside it the new permission.
+    func restoreAccess(for track: Track, resume: Bool) {
+        guard !restoring else { return }
+        restoring = true
+        let panel = NSOpenPanel(); panel.canChooseFiles = true; panel.canChooseDirectories = true; panel.allowsMultipleSelection = true
+        panel.directoryURL = track.url.deletingLastPathComponent().deletingLastPathComponent()
+        panel.message = "PlayAmp needs your permission to read this music again. Choose the folder that holds it (\(track.url.deletingLastPathComponent().lastPathComponent)) or a folder above it."
+        panel.prompt = "Allow"
+        panel.begin { [weak self] result in
+            guard let self else { return }
+            self.restoring = false
+            var fixed = 0
+            if result == .OK {
+                for root in panel.urls {
+                    guard let bookmark = try? root.bookmarkData(options: [.withSecurityScope, .securityScopeAllowOnlyReadAccess], includingResourceValuesForKeys: nil, relativeTo: nil) else { continue }
+                    let directory = (try? root.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true
+                    fixed += self.session.relink(root: root, bookmark: bookmark, isDirectory: directory)
+                }
+                self.save()
+            }
+            let current = self.session.tracks.first { $0.id == track.id }
+            if fixed > 0, let current, current.bookmark != track.bookmark { self.play(track.id, resume: resume) }
+            else { self.message = "\(track.title): PlayAmp has no permission to read this file. Play it again and choose its folder to allow it." }
+        }
     }
     func releaseScopes() { for url in scopes { url.stopAccessingSecurityScopedResource() }; scopes.removeAll() }
     func stop() { audio.player.stop(); releaseScopes(); loaded = nil; pendingSeek = nil; position = 0; playing = false; save() }
@@ -276,6 +307,9 @@ import PlayAmpCore
                 }
                 return result
             }.value
+            // Tracks already in the playlist keep their place but take the fresh permission.
+            let fresh = Dictionary(tracks.map { ($0.url, $0) }, uniquingKeysWith: { first, _ in first })
+            for index in session.tracks.indices { if let new = fresh[session.tracks[index].url], let bookmark = new.bookmark { session.tracks[index].bookmark = bookmark; session.tracks[index].relativePath = new.relativePath } }
             let existing = Set(session.tracks.map(\.url)); session.tracks.append(contentsOf: tracks.filter { !existing.contains($0.url) })
             if session.selected == nil { session.selected = session.tracks.first?.id }
             importing = false; if tracks.isEmpty { message = "No supported audio files found." }; save()

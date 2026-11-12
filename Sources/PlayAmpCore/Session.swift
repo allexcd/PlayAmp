@@ -53,6 +53,22 @@ public struct Session: Codable {
         return repeatMode == .all || !automatic ? tracks[(next + tracks.count) % tracks.count].id : nil
     }
     public var safePreamp: Float { min(preamp, -bands.reduce(0) { $0 + max(0, $1) }) }
+    /// Points every track at or inside `root` to a fresh permission for it. Returns how many changed.
+    /// Used when saved permissions stop working (they belong to the app that made them) and when
+    /// a folder that is already in the playlist is added again.
+    @discardableResult public mutating func relink(root: URL, bookmark: Data, isDirectory: Bool) -> Int {
+        let base = root.standardizedFileURL.path
+        var count = 0
+        for index in tracks.indices {
+            let path = tracks[index].url.standardizedFileURL.path
+            if path == base && !isDirectory { tracks[index].bookmark = bookmark; tracks[index].relativePath = nil; count += 1 }
+            else if isDirectory && path.hasPrefix(base.hasSuffix("/") ? base : base + "/") {
+                tracks[index].bookmark = bookmark
+                tracks[index].relativePath = String(path.dropFirst(base.hasSuffix("/") ? base.count : base.count + 1)); count += 1
+            }
+        }
+        return count
+    }
 }
 public enum SessionStore {
     public static func load(from url: URL) -> Session { (try? JSONDecoder().decode(Session.self, from: Data(contentsOf: url))) ?? Session() }
